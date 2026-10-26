@@ -60,7 +60,7 @@ export default function App() {
   const [detailProduct, setDetailProduct] = useState<Product | null>(null)
   const [detailColor, setDetailColor] = useState('')
   const [detailQty, setDetailQty] = useState(1)
-  const [form, setForm] = useState({ name:'', category:'رفايع المطبخ', brand:'خيال', price:'', old_price:'', stock:'0', image_url:'', description:'', color_variants: [] as {name:string;hex:string;image_url:string}[] })
+  const [form, setForm] = useState({ name:'', category:'رفايع المطبخ', brand:'خيال', price:'', old_price:'', stock:'0', image_url:'', description:'', color_variants: [] as {name:string;hex:string;image_url:string;stock:number}[] })
 
   useEffect(() => {
     if (!supabase) {
