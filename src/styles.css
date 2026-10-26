@@ -83,3 +83,8 @@ body{background:#fff;color:#20372c}
 @keyframes cloud-drift{0%,100%{translate:0 0}50%{translate:13px -7px}}
 @media(max-width:650px){.hero-art:before{left:2%;bottom:12%;transform:scale(.7)}.hero-art:after{right:0;top:7%;transform:scale(.65)}.card-one{animation-duration:6s}.card-two{animation-duration:7s}.card-three{animation-duration:6.5s}}
 @media(prefers-reduced-motion:reduce){.card-one,.card-two,.card-three,.hero-art:before,.hero-art:after{animation:none!important}}
+
+
+/* Friendly fallback for unavailable product photos */
+.product-image.image-failed{display:grid;place-items:center;position:relative;background:radial-gradient(circle at 50% 38%,#fff 0 14%,transparent 15%),linear-gradient(145deg,#f3f8f3,#e4efe6)}
+.product-image.image-failed:after{content:"خيال";display:grid;place-items:center;width:66px;height:66px;border-radius:22px;background:#fff;color:#246447;font-weight:900;font-size:20px;letter-spacing:1px;box-shadow:0 8px 24px #174f3512;border:1px solid #dceade}
