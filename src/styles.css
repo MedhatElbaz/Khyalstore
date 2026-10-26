@@ -88,3 +88,35 @@ body{background:#fff;color:#20372c}
 /* Friendly fallback for unavailable product photos */
 .product-image.image-failed{display:grid;place-items:center;position:relative;background:radial-gradient(circle at 50% 38%,#fff 0 14%,transparent 15%),linear-gradient(145deg,#f3f8f3,#e4efe6)}
 .product-image.image-failed:after{content:"خيال";display:grid;place-items:center;width:66px;height:66px;border-radius:22px;background:#fff;color:#246447;font-weight:900;font-size:20px;letter-spacing:1px;box-shadow:0 8px 24px #174f3512;border:1px solid #dceade}
+
+
+/* Final responsive polish — KHYAL storefront */
+:root{scroll-behavior:smooth}
+html{scroll-padding-top:90px}
+body{overflow-x:hidden}
+button,a,[role="button"]{-webkit-tap-highlight-color:transparent}
+button{transition:transform .18s ease,box-shadow .18s ease,background-color .18s ease}
+button:active{transform:translateY(1px)}
+:focus-visible{outline:3px solid #d4a85c;outline-offset:3px}
+img{max-width:100%}
+.product-card,.product,.category-card{min-width:0}
+.product-image img{object-fit:contain}
+@media(max-width:760px){
+  .container,.page-container,.content-wrap{width:min(100% - 28px,100%);margin-inline:auto}
+  .hero{overflow:hidden}
+  .hero h1{font-size:clamp(1.8rem,7vw,2.6rem);line-height:1.25}
+  .hero p{font-size:.96rem;line-height:1.8}
+  .products-grid,.product-grid,.products{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+  .product-card{border-radius:18px;overflow:hidden}
+  .product-card img,.product-image{max-width:100%}
+  .product-card button,.product button{min-height:42px}
+  header{max-width:100%}
+  input,select,textarea{max-width:100%;font-size:16px}
+}
+@media(max-width:390px){
+  .products-grid,.product-grid,.products{gap:8px}
+  .product-card{border-radius:14px}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
