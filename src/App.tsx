@@ -121,14 +121,24 @@ export default function App() {
   const saveProduct = async (e:React.FormEvent) => {
     e.preventDefault()
     if (!supabase || !session) return
-    const payload = { name:form.name.trim(), category:form.category, brand:form.brand.trim(), price:Number(form.price), old_price:form.old_price ? Number(form.old_price) : null, stock:Number(form.stock), image_url:form.image_url.trim() || null, description:form.description.trim(), is_published:true }
-    if (!payload.name || !Number.isFinite(payload.price) || payload.price < 0 || payload.stock < 0) { setNotice('راجع اسم المنتج والسعر والمخزون'); return }
+    const requestedStock = Number(form.stock)
+    const payload = { name:form.name.trim(), category:form.category, brand:form.brand.trim(), price:Number(form.price), old_price:form.old_price ? Number(form.old_price) : null, image_url:form.image_url.trim() || null, description:form.description.trim(), is_published:true }
+    if (!payload.name || !Number.isFinite(payload.price) || payload.price < 0 || !Number.isInteger(requestedStock) || requestedStock < 0) { setNotice('راجع اسم المنتج والسعر والمخزون'); return }
     const result = editing
       ? await supabase.from('products').update(payload).eq('id', editing.id).select().single()
       : await supabase.from('products').insert(payload).select().single()
-    if (result.error) { setNotice('لم يتم حفظ المنتج. راجع صلاحيات قاعدة البيانات.'); return }
-    setProducts(prev => editing ? prev.map(p => p.id === editing.id ? result.data as Product : p) : [result.data as Product, ...prev])
-    resetForm(); setNotice('تم حفظ المنتج بنجاح')
+    if (result.error || !result.data) { setNotice('لم يتم حفظ بيانات المنتج. راجع صلاحيات قاعدة البيانات.'); return }
+    const savedProduct = result.data as Product
+    const { error: stockError } = await supabase.rpc('set_product_stock', { p_product_id: savedProduct.id, p_new_stock: requestedStock, p_reason: editing ? 'manual_adjustment' : 'opening_balance', p_note: editing ? 'تعديل المخزون من لوحة الإدارة بموافقة المدير' : 'رصيد افتتاحي لمنتج جديد' })
+    if (stockError) {
+      const { data: freshProduct } = await supabase.from('products').select('*').eq('id', savedProduct.id).single()
+      if (freshProduct) setProducts(prev => editing ? prev.map(p => p.id === savedProduct.id ? freshProduct as Product : p) : [freshProduct as Product, ...prev])
+      setNotice('تم حفظ بيانات المنتج لكن لم يتغير المخزون. نفّذ ترحيل المخزون في Supabase ثم أعد المحاولة.')
+      return
+    }
+    const finalProduct = { ...savedProduct, stock: requestedStock }
+    setProducts(prev => editing ? prev.map(p => p.id === savedProduct.id ? finalProduct : p) : [finalProduct, ...prev])
+    resetForm(); setNotice('تم حفظ المنتج وتسجيل حركة المخزون بنجاح')
   }
   const deleteProduct = async (p:Product) => {
     if (!supabase || !session || !confirm(`حذف المنتج "${p.name}"؟`)) return
