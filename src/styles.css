@@ -33,3 +33,33 @@
 .add-button:hover{background:#c94b22;color:#fff}
 .bottom-cta{background:linear-gradient(110deg,#fff0df,#f0f4e8);border:1px solid #f0dfcc}
 @media(max-width:650px){.hero{background:linear-gradient(145deg,#fff0df,#f4f2e8)}.product-card{border-radius:14px}.product-image{height:165px}.add-button{padding:10px 6px}}
+
+/* KHYAL brand refresh: forest green + white only; remove orange accents */
+:root{--green:#145c43;--green2:#21805a;--orange:#21805a;--cream:#f5f8f5;--line:#e2eae4}
+body{background:#fff;color:#20372c}
+.top-strip{background:#145c43;color:#fff}
+.site-header{background:#fff;box-shadow:0 5px 22px #163d2a0c}
+.brand-mark{background:linear-gradient(145deg,#21805a,#104a35);box-shadow:0 5px 13px #155e4b20}
+.category-nav button.active,.category-nav button:hover{background:#eaf4ed;color:#145c43}
+.hero{background:linear-gradient(120deg,#f0f7f1 0%,#fff 52%,#e7f2e9 100%);border:1px solid #e0ebe2;box-shadow:0 12px 32px #1b56340a}
+.hero h1 em{color:#21805a}
+.hero-circle{background:#d7e9da}
+.hero-card{box-shadow:0 18px 38px #214b3215;border:1px solid #fff}
+.primary-button{background:linear-gradient(135deg,#21805a,#145c43);box-shadow:0 6px 16px #145c4320}
+.primary-button:hover{background:#104a35}
+.trust-row>div{box-shadow:0 4px 16px #243d2c08}
+.trust-row svg{color:#21805a}
+.section-heading h2{color:#184b37}
+.results-count{background:#eaf4ed;color:#145c43;font-weight:700}
+.product-card{border-radius:17px;box-shadow:0 4px 15px #263d2c08}
+.product-card:hover{box-shadow:0 14px 30px #263d2c15;border-color:#cfe2d4}
+.product-image{background:linear-gradient(140deg,#f7faf7,#edf4ee)}
+.discount-badge{background:#145c43;color:#fff;font-weight:800;border-radius:6px}
+.quick-add{background:#eaf4ed;color:#145c43}
+.quick-add:hover{background:#145c43;color:#fff}
+.price-line strong{color:#145c43}
+.add-button{background:#edf6ef;border-color:#cfe2d4;color:#145c43;font-weight:800}
+.add-button:hover{background:#145c43;color:#fff}
+.bottom-cta{background:linear-gradient(110deg,#eff7f0,#e5f0e7);border:1px solid #dceade}
+.setup-note{background:#edf5ee}
+@media(max-width:650px){.hero{background:linear-gradient(145deg,#eff7f0,#fff)}.product-card{border-radius:14px}.product-image{height:165px}.add-button{padding:10px 6px}}
