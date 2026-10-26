@@ -94,7 +94,7 @@ export default function App() {
     e.preventDefault(); setLoginError('')
     if (!supabase) { setLoginError('اربط المشروع بـ Supabase أولًا حسب ملف README.'); return }
     const { error } = await supabase.auth.signInWithPassword({ email, password })
-    if (error) setLoginError('تعذر تسجيل الدخول. راجع البيانات وإعدادات Supabase.')
+    if (error) setLoginError(`فشل تسجيل الدخول: ${error.message}`)
   }
   const logout = async () => { if (supabase) await supabase.auth.signOut(); setSession(null) }
   const resetForm = () => { setEditing(null); setForm({ name:'', category:'رفايع المطبخ', brand:'خيال', price:'', old_price:'', stock:'0', image_url:'', description:'' }) }
