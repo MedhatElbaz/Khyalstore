@@ -58,20 +58,47 @@ export default function App() {
   const [form, setForm] = useState({ name:'', category:'رفايع المطبخ', brand:'خيال', price:'', old_price:'', stock:'0', image_url:'', description:'' })
 
   useEffect(() => {
-    if (!supabase) return
-    supabase.auth.getSession().then(({ data }) => setSession(data.session))
-    const { data: listener } = supabase.auth.onAuthStateChange((_event, nextSession) => setSession(nextSession))
+    if (!supabase) {
+      setNotice('اتصال قاعدة البيانات غير مفعّل في نسخة المتجر المنشورة. راجع إعدادات النشر في GitHub Actions.')
+      return
+    }
+
+    let active = true
     const load = async () => {
-      const { data, error } = await supabase!.from('products').select('*').eq('is_published', true).order('created_at', { ascending: false })
+      const { data, error } = await supabase.from('products')
+        .select('*')
+        .eq('is_published', true)
+        .order('created_at', { ascending: false })
+
+      if (!active) return
       if (error) {
-        console.error('KHYAL product load failed:', error)
-        setNotice('تعذر تحميل المنتجات من قاعدة البيانات. راجع اتصال Supabase وصلاحيات قراءة المنتجات.')
+        console.error('KHYAL product load failed:', {
+          message: error.message,
+          code: error.code,
+          details: error.details,
+          hint: error.hint,
+        })
+        setNotice(`تعذر تحميل المنتجات من قاعدة البيانات (${error.code || 'خطأ اتصال'}). افتح المتجر مجددًا بعد قليل أو راجع صلاحيات Supabase.`)
         return
       }
+
       setProducts((data || []) as Product[])
+      if (!data?.length) {
+        setNotice('اتصل المتجر بقاعدة البيانات، لكن لا توجد منتجات منشورة ظاهرة للزوار. راجع حالة النشر وصلاحيات القراءة.')
+      } else {
+        setNotice('')
+      }
     }
+
+    supabase.auth.getSession().then(({ data }) => {
+      if (active) setSession(data.session)
+    })
+    const { data: listener } = supabase.auth.onAuthStateChange((_event, nextSession) => setSession(nextSession))
     load()
-    return () => listener.subscription.unsubscribe()
+    return () => {
+      active = false
+      listener.subscription.unsubscribe()
+    }
   }, [])
 
   const filtered = useMemo(() => products.filter(p => {
