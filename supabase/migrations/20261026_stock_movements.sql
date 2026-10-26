@@ -34,6 +34,11 @@ create policy "admin inserts stock movements" on public.stock_movements
 -- movements and updating products.stock. Do not seed guessed historical sales.
 
 
+-- Tighten public execution privileges on the privileged admin helper.
+revoke all on function public.is_admin() from public, anon;
+grant execute on function public.is_admin() to authenticated;
+revoke all on function public.rls_auto_enable() from public, anon, authenticated;
+
 -- All stock changes must go through this function so the audit row and product
 -- quantity update happen in one transaction. It requires the migration and
 -- public.is_admin() from supabase/schema.sql to be installed first.
@@ -62,7 +67,7 @@ begin
   if p_new_stock is null or p_new_stock < 0 then
     raise exception 'stock must be zero or greater' using errcode = '22023';
   end if;
-  if p_reason not in ('opening_balance','receipt','manual_adjustment','damage','return','sale','sale_reversal') then
+  if p_reason is null or p_reason not in ('opening_balance','receipt','manual_adjustment','damage','return','sale','sale_reversal') then
     raise exception 'invalid stock movement type' using errcode = '22023';
   end if;
 
