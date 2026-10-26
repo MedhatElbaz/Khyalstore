@@ -63,3 +63,23 @@ body{background:#fff;color:#20372c}
 .bottom-cta{background:linear-gradient(110deg,#eff7f0,#e5f0e7);border:1px solid #dceade}
 .setup-note{background:#edf5ee}
 @media(max-width:650px){.hero{background:linear-gradient(145deg,#eff7f0,#fff)}.product-card{border-radius:14px}.product-image{height:165px}.add-button{padding:10px 6px}}
+
+
+/* Dreamy floating cookware hero */
+.hero{isolation:isolate;background:linear-gradient(115deg,#e5f2e8 0%,#f9fcf8 48%,#e4f1e7 100%);border-color:#d9e9dd;box-shadow:0 18px 48px #174f3512}
+.hero:before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.65;background:radial-gradient(ellipse at 12% 78%,#fff 0 8%,transparent 24%),radial-gradient(ellipse at 26% 91%,#fff 0 10%,transparent 24%),radial-gradient(ellipse at 82% 13%,#fff 0 5%,transparent 19%),radial-gradient(ellipse at 94% 76%,#d8eadc 0 7%,transparent 22%)}
+.hero-art{isolation:isolate}
+.hero-art:before,.hero-art:after{content:"";position:absolute;z-index:-1;pointer-events:none;border-radius:999px;filter:blur(1px);background:rgba(255,255,255,.86);box-shadow:28px 8px 0 3px rgba(255,255,255,.8),58px 0 0 -2px rgba(255,255,255,.9),-24px 12px 0 4px rgba(255,255,255,.72),0 18px 24px #2c634018}
+.hero-art:before{width:118px;height:44px;left:4%;bottom:16%;animation:cloud-drift 8s ease-in-out infinite}
+.hero-art:after{width:96px;height:34px;right:2%;top:12%;opacity:.75;animation:cloud-drift 10s ease-in-out infinite reverse}
+.hero-circle{background:radial-gradient(circle at 35% 28%,#f9fff9,#cde5d3 72%);box-shadow:inset -15px -18px 35px #a7cbb31f,0 18px 50px #1e694016}
+.hero-card{backdrop-filter:blur(8px);background:linear-gradient(145deg,#ffffffed,#f4faf5d9);border:1px solid #fff;box-shadow:0 22px 44px #174f3520, inset 0 1px 0 #fff}
+.card-one{animation:float-pot 5.5s ease-in-out infinite}
+.card-two{animation:float-pot 6.5s ease-in-out -1.5s infinite}
+.card-three{animation:float-pot 5.8s ease-in-out -2s infinite}
+.art-star{color:#4d9a70;text-shadow:0 0 18px #b4dfc0}
+.hero h1,.hero p,.hero-copy .eyebrow,.hero-points{position:relative}
+@keyframes float-pot{0%,100%{translate:0 0}50%{translate:0 -12px}}
+@keyframes cloud-drift{0%,100%{translate:0 0}50%{translate:13px -7px}}
+@media(max-width:650px){.hero-art:before{left:2%;bottom:12%;transform:scale(.7)}.hero-art:after{right:0;top:7%;transform:scale(.65)}.card-one{animation-duration:6s}.card-two{animation-duration:7s}.card-three{animation-duration:6.5s}}
+@media(prefers-reduced-motion:reduce){.card-one,.card-two,.card-three,.hero-art:before,.hero-art:after{animation:none!important}}
