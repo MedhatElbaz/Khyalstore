@@ -63,9 +63,10 @@ export default function App() {
       return
     }
 
+    const client = supabase
     let active = true
     const load = async () => {
-      const { data, error } = await supabase.from('products')
+      const { data, error } = await client.from('products')
         .select('*')
         .eq('is_published', true)
         .order('created_at', { ascending: false })
@@ -90,10 +91,10 @@ export default function App() {
       }
     }
 
-    supabase.auth.getSession().then(({ data }) => {
+    client.auth.getSession().then(({ data }) => {
       if (active) setSession(data.session)
     })
-    const { data: listener } = supabase.auth.onAuthStateChange((_event, nextSession) => setSession(nextSession))
+    const { data: listener } = client.auth.onAuthStateChange((_event, nextSession) => setSession(nextSession))
     load()
     return () => {
       active = false
